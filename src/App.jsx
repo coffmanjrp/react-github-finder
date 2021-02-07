@@ -8,11 +8,16 @@ function App() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const clientID = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  const clientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+
   useEffect(() => {
     setLoading(true);
 
     const fetchData = async () => {
-      const res = await axios.get('https://api.github.com/users');
+      const res = await axios.get(
+        `https://api.github.com/users?client_id=${clientID}&client_secret=${clientSecret}`
+      );
       setUsers(res.data);
       setLoading(false);
     };
