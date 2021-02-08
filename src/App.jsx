@@ -27,14 +27,34 @@ function App() {
     } catch (error) {
       throw new Error(error);
     }
+
     // eslint-disable-next-line
   }, []);
+
+  // Search GitHub users
+  const searchUsers = async (text) => {
+    setLoading(true);
+
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.github.com/search/users?q=${text}&client_id=${clientID}&client_secret=${clientSecret}`
+      );
+      setUsers(res.data.items);
+      setLoading(false);
+    };
+
+    try {
+      fetchData();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return (
     <div>
       <Navbar />
       <div className="container">
-        <Search />
+        <Search searchUsers={searchUsers} />
         <Users users={users} loading={loading} />
       </div>
     </div>
