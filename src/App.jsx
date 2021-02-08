@@ -37,26 +37,6 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
-  // Search GitHub users
-  const searchUsers = async (text) => {
-    setLoading(true);
-
-    const fetchData = async () => {
-      const res = await axios.get(
-        `https://api.github.com/search/users?q=${text}&client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      );
-      setUsers(res.data.items);
-      setLoading(false);
-      setAlert(null);
-    };
-
-    try {
-      fetchData();
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
   // Get single user
   const getUser = async (username) => {
     setLoading(true);
@@ -126,7 +106,6 @@ function App() {
                     <Search
                       clearUsers={clearUsers}
                       callAlert={callAlert}
-                      searchUsers={searchUsers}
                       showClear={users.length > 0 ? true : false}
                     />
                     <Users users={users} loading={loading} />
