@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import { Alert, Navbar } from './components/layout';
+import { About } from './components/pages';
 import { Search, Users } from './components/users';
 import './App.css';
 
@@ -41,8 +43,8 @@ function App() {
         `https://api.github.com/search/users?q=${text}&client_id=${clientID}&client_secret=${clientSecret}`
       );
       setUsers(res.data.items);
-      setAlert(null);
       setLoading(false);
+      setAlert(null);
     };
 
     try {
@@ -68,19 +70,32 @@ function App() {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <Alert alert={alert} />
-        <Search
-          clearUsers={clearUsers}
-          callAlert={callAlert}
-          searchUsers={searchUsers}
-          showClear={users.length > 0 ? true : false}
-        />
-        <Users users={users} loading={loading} />
+    <Router>
+      <div>
+        <Navbar />
+        <div className="container">
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <>
+                  <Alert alert={alert} />
+                  <Search
+                    clearUsers={clearUsers}
+                    callAlert={callAlert}
+                    searchUsers={searchUsers}
+                    showClear={users.length > 0 ? true : false}
+                  />
+                  <Users users={users} loading={loading} />
+                </>
+              )}
+            />
+            <Route exact path={'/about'} component={About} />
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
