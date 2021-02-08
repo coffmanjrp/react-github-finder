@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Navbar } from './components/layout';
-import { Users } from './components/users';
+import { Search, Users } from './components/users';
 import './App.css';
 
 function App() {
@@ -34,6 +34,7 @@ function App() {
     <div>
       <Navbar />
       <div className="container">
+        <Search />
         <Users users={users} loading={loading} />
       </div>
     </div>
