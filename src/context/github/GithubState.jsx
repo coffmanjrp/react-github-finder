@@ -45,10 +45,28 @@ const GithubState = (props) => {
   };
 
   // Get user
+  const getUser = async (username) => {
+    setLoading();
+
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      );
+
+      dispatch({ type: GET_USER, payload: res.data });
+    };
+
+    try {
+      fetchData();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   // Get repos
 
   // Clear user
+  const clearUsers = () => dispatch({ type: CLEAR_USER });
 
   // Set loading
   const setLoading = () => dispatch({ type: SET_LOADING });
@@ -61,6 +79,8 @@ const GithubState = (props) => {
         repos: state.repos,
         loading: state.loading,
         searchUsers,
+        getUser,
+        clearUsers,
       }}
     >
       {props.children}

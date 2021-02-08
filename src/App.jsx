@@ -8,8 +8,6 @@ import GithubState from './context/github/GithubState';
 import './App.css';
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -17,44 +15,25 @@ function App() {
   const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
   const githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
 
-  useEffect(() => {
-    setLoading(true);
+  // useEffect(() => {
+  //   setLoading(true);
 
-    const fetchData = async () => {
-      const res = await axios.get(
-        `https://api.github.com/users?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      );
-      setUsers(res.data);
-      setLoading(false);
-    };
+  //   const fetchData = async () => {
+  //     const res = await axios.get(
+  //       `https://api.github.com/users?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+  //     );
+  //     setUsers(res.data);
+  //     setLoading(false);
+  //   };
 
-    try {
-      fetchData();
-    } catch (error) {
-      throw new Error(error);
-    }
+  //   try {
+  //     fetchData();
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
 
-    // eslint-disable-next-line
-  }, []);
-
-  // Get single user
-  const getUser = async (username) => {
-    setLoading(true);
-
-    const fetchData = async () => {
-      const res = await axios.get(
-        `https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      );
-      setUser(res.data);
-      setLoading(false);
-    };
-
-    try {
-      fetchData();
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+  //   // eslint-disable-next-line
+  // }, []);
 
   // Get users repos
   const getUserRepos = async (username) => {
@@ -73,12 +52,6 @@ function App() {
     } catch (error) {
       throw new Error(error);
     }
-  };
-
-  // Clear users from state
-  const clearUsers = () => {
-    setUsers([]);
-    setLoading(false);
   };
 
   // Set alert
@@ -103,12 +76,8 @@ function App() {
                 render={() => (
                   <>
                     <Alert alert={alert} />
-                    <Search
-                      clearUsers={clearUsers}
-                      callAlert={callAlert}
-                      showClear={users.length > 0 ? true : false}
-                    />
-                    <Users users={users} loading={loading} />
+                    <Search />
+                    <Users />
                   </>
                 )}
               />
@@ -117,14 +86,7 @@ function App() {
                 exact
                 path={'/user/:login'}
                 render={(props) => (
-                  <User
-                    {...props}
-                    getUser={getUser}
-                    getUserRepos={getUserRepos}
-                    user={user}
-                    repos={repos}
-                    loading={loading}
-                  />
+                  <User {...props} getUserRepos={getUserRepos} repos={repos} />
                 )}
               />
             </Switch>
