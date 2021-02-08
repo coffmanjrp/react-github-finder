@@ -9,6 +9,7 @@ import './App.css';
 function App() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({});
+  const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
@@ -74,6 +75,25 @@ function App() {
     }
   };
 
+  // Get users repos
+  const getUserRepos = async (username) => {
+    setLoading(true);
+
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      );
+      setRepos(res.data);
+      setLoading(false);
+    };
+
+    try {
+      fetchData();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   // Clear users from state
   const clearUsers = () => {
     setUsers([]);
@@ -98,7 +118,7 @@ function App() {
             <Route
               exact
               path="/"
-              render={(props) => (
+              render={() => (
                 <>
                   <Alert alert={alert} />
                   <Search
@@ -119,7 +139,9 @@ function App() {
                 <User
                   {...props}
                   getUser={getUser}
+                  getUserRepos={getUserRepos}
                   user={user}
+                  repos={repos}
                   loading={loading}
                 />
               )}

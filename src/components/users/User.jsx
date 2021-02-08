@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Repos } from '../repos';
 import { Spinner } from '../layout';
 import PropTypes from 'prop-types';
 
-const User = ({ getUser, match, loading, user }) => {
+const User = ({ getUser, getUserRepos, match, loading, user, repos }) => {
   const {
     name,
     avatar_url,
@@ -22,6 +23,7 @@ const User = ({ getUser, match, loading, user }) => {
 
   useEffect(() => {
     getUser(match.params.login);
+    getUserRepos(match.params.login);
     // eslint-disable-next-line
   }, []);
 
@@ -92,6 +94,7 @@ const User = ({ getUser, match, loading, user }) => {
         <div className="badge badge-light">Public Repos: {public_repos}</div>
         <div className="badge badge-dark">Public Gists: {public_gists}</div>
       </div>
+      <Repos repos={repos} />
     </>
   );
 };
@@ -99,7 +102,9 @@ const User = ({ getUser, match, loading, user }) => {
 User.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
+  repos: PropTypes.array.isRequired,
   getUser: PropTypes.func.isRequired,
+  getUserRepos: PropTypes.func.isRequired,
 };
 
 export default User;
