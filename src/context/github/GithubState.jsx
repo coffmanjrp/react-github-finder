@@ -1,14 +1,13 @@
 import { useReducer } from 'react';
 import axios from 'axios';
-import githubContext from './githubContext';
-import githubReducer from './githubReducer';
+import GithubContext from './githubContext';
+import GithubReducer from './githubReducer';
 import {
   SEARCH_USERS,
   GET_USER,
   CLEAR_USER,
   GET_REPOS,
   SET_LOADING,
-  SET_ALERT,
 } from '../types';
 
 const GithubState = (props) => {
@@ -19,7 +18,7 @@ const GithubState = (props) => {
     loading: false,
   };
 
-  const [state, dispatch] = useReducer(githubReducer, initialState);
+  const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
   const githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
@@ -89,7 +88,7 @@ const GithubState = (props) => {
   const setLoading = () => dispatch({ type: SET_LOADING });
 
   return (
-    <githubContext.Provider
+    <GithubContext.Provider
       value={{
         users: state.users,
         user: state.user,
@@ -102,7 +101,7 @@ const GithubState = (props) => {
       }}
     >
       {props.children}
-    </githubContext.Provider>
+    </GithubContext.Provider>
   );
 };
 
