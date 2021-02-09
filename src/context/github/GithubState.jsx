@@ -10,6 +10,16 @@ import {
   SET_LOADING,
 } from '../types';
 
+const githubClientId =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_GITHUB_CLIENT_ID
+    : process.env.GITHUB_CLIENT_ID;
+
+const githubClientSecret =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.REACT_APP_GITHUB_CLIENT_SECRET
+    : process.env.GITHUB_CLIENT_SECRET;
+
 const GithubState = (props) => {
   const initialState = {
     users: [],
@@ -19,9 +29,6 @@ const GithubState = (props) => {
   };
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
-
-  const githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
-  const githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
 
   // Search users
   const searchUsers = async (text) => {
