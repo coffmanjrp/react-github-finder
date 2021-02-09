@@ -4,9 +4,9 @@ import { Repos } from '../repos';
 import { Spinner } from '../layout';
 import GithubContext from '../../context/github/githubContext';
 
-const User = ({ getUserRepos, match, repos }) => {
+const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
-  const { user, getUser, loading } = githubContext;
+  const { user, getUser, getUserRepos, loading, repos } = githubContext;
   const {
     name,
     avatar_url,
