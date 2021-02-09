@@ -4,7 +4,7 @@ import { Navbar } from './components/layout';
 import { User } from './components/users';
 import GithubState from './context/github/GithubState';
 import AlertState from './context/alert/AlertState';
-import './App.css';
+import './assets/css/App.css';
 
 function App() {
   return (
