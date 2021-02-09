@@ -3,6 +3,7 @@ import axios from 'axios';
 import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
 import {
+  GET_USERS,
   SEARCH_USERS,
   GET_USER,
   CLEAR_USER,
@@ -26,9 +27,28 @@ const GithubState = (props) => {
     user: {},
     repos: [],
     loading: false,
+    firstRender: false,
   };
 
   const [state, dispatch] = useReducer(GithubReducer, initialState);
+
+  // Get users
+  const getUsers = async () => {
+    setLoading();
+
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.github.com/users?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      );
+      dispatch({ type: GET_USERS, payload: res.data });
+    };
+
+    try {
+      fetchData();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   // Search users
   const searchUsers = async (text) => {
@@ -99,6 +119,8 @@ const GithubState = (props) => {
         user: state.user,
         repos: state.repos,
         loading: state.loading,
+        firstRender: state.firstRender,
+        getUsers,
         searchUsers,
         getUser,
         clearUsers,
