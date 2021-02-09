@@ -5,10 +5,10 @@ import GithubContext from '../../context/github/githubContext';
 
 const Home = () => {
   const githubContext = useContext(GithubContext);
-  const { getUsers, firstRender } = githubContext;
+  const { getUsers, isFirstRender } = githubContext;
 
   useEffect(() => {
-    if (!firstRender) {
+    if (!isFirstRender) {
       getUsers();
     }
     // eslint-disable-next-line

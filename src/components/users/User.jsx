@@ -6,7 +6,7 @@ import GithubContext from '../../context/github/githubContext';
 
 const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
-  const { user, getUser, getUserRepos, loading, repos } = githubContext;
+  const { user, getUser, getUserRepos, isLoading, repos } = githubContext;
   const {
     name,
     avatar_url,
@@ -29,7 +29,7 @@ const User = ({ match }) => {
     // eslint-disable-next-line
   }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 

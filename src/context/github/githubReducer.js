@@ -13,37 +13,37 @@ const GithubReducer = (state, action) => {
       return {
         ...state,
         users: action.payload,
-        loading: false,
-        firstRender: true,
+        isLoading: false,
+        isFirstRender: true,
       };
     case SEARCH_USERS:
       return {
         ...state,
         users: action.payload,
-        loading: false,
+        isLoading: false,
       };
     case GET_USER:
       return {
         ...state,
         user: action.payload,
-        loading: false,
+        isLoading: false,
       };
     case GET_REPOS:
       return {
         ...state,
         repos: action.payload,
-        loading: false,
+        isLoading: false,
       };
     case CLEAR_USER:
       return {
         ...state,
         users: [],
-        loading: false,
+        isLoading: false,
       };
     case SET_LOADING:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
     default:
       return state;
