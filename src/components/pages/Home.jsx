@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Alert } from '../layout';
 import { Search, Users } from '../users';
-import GithubContext from '../../context/github/githubContext';
+import { GithubContext } from '../../context/github';
 
 const Home = () => {
   const githubContext = useContext(GithubContext);
