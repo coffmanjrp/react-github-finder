@@ -33,11 +33,13 @@ const GithubState = (props) => {
 
   // Get users
   const getUsers = async () => {
+    const randomNumber = Math.floor(Math.random() * 78800000);
+
     setLoading();
 
     const fetchData = async () => {
       const res = await axios.get(
-        `https://api.github.com/users?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+        `https://api.github.com/users?since=${randomNumber}&client_id=${githubClientId}&client_secret=${githubClientSecret}`
       );
       dispatch({ type: GET_USERS, payload: res.data });
     };
